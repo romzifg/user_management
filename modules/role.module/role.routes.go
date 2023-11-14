@@ -9,4 +9,5 @@ func Routes(r *gin.Engine) {
 	route.GET("/:id", ShowById)
 	route.POST("/", Create)
 	route.PUT("/:id", Update)
+	route.DELETE("/:id", Delete)
 }

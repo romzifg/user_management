@@ -74,7 +74,7 @@ func Update(c *gin.Context) {
 	var dto UpdateRoleDto
 	id := c.Param("id")
 	
-	if err := c.ShouldBindJSON(&role); err != nil {
+	if err := c.ShouldBindJSON(&dto); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"statusCode": http.StatusBadRequest,
 			"message": "Bad Request",
@@ -107,5 +107,36 @@ func Update(c *gin.Context) {
 		"statusCode": http.StatusOK,
 		"message": "Success",
 		"data": role,
+	})
+}
+
+func Delete(c *gin.Context) {
+	var role models.Role
+	id := c.Param("id")
+
+	if err := models.DB.First(&role, id).Error; err != nil {
+		switch err {
+		case gorm.ErrRecordNotFound:
+			c.JSON(http.StatusNotFound, gin.H{
+				"statusCode": http.StatusNotFound,
+				"message": "Not Found",
+				"data": nil,
+			})
+			return
+		default:
+			c.JSON(http.StatusBadRequest, gin.H{
+				"statusCode": http.StatusBadRequest,
+				"message": "Bad Request",
+				"data": nil,
+			})
+			return
+		}
+	}
+
+	models.DB.Delete(&role).Where("id = ?", id)
+	c.JSON(http.StatusNotFound, gin.H{
+		"statusCode": http.StatusOK,
+		"message": "Success",
+		"data": id,
 	})
 }
