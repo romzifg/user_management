@@ -23,5 +23,7 @@ func ConnectDatabase() {
 		log.Fatal("Error connect to databse")
 	}
 
+	database.AutoMigrate(&Role{})
+	
 	DB = database
 }

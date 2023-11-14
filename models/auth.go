@@ -8,7 +8,7 @@ type AuthModel struct {
 	Email    	string `gorm:"varchar(50)" json:"email"`
 	Password 	string `gorm:"carchar(30)" json:"password"`
 	RoleId   	int64  `gorm:"int" json:"role_id"`
-	Role 		RoleModel `gorm:"foreignKey:RoleId"`
+	Role 		Role `gorm:"foreignKey:RoleId"`
 	CreatedAt 	time.Time	`gorm:"timestamp; default:CURRENT_TIMESTAMP()" json:"created_at"`
 	UpdatedAt 	time.Time	`gorm:"timestamp; default:CURRENT_TIMESTAMP()" json:"updated_at"`
 }
