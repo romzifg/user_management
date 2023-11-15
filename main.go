@@ -8,6 +8,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/romzifg/user_management/models"
 	rolemodule "github.com/romzifg/user_management/modules/role.module"
+	usermodule "github.com/romzifg/user_management/modules/user.module"
 )
 
 func main() {
@@ -22,6 +23,7 @@ func main() {
 
 	// Route
 	rolemodule.Routes(router)
+	usermodule.Routes(router)
 	
 	port := os.Getenv("PORT")
 	router.Run(":" + port)
