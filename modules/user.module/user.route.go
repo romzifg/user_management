@@ -10,4 +10,5 @@ func Routes(r *gin.Engine) {
 
 	route.GET("/", ShowAll)
 	route.GET("/:id", ShowById)
+	route.POST("/", Create)
 }
