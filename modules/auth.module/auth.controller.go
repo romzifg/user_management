@@ -51,9 +51,19 @@ func Login(c *gin.Context) {
 			return
 	}
 
+	token, err := helpers.GenerateToken(int(auth.Id))
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"statusCode": http.StatusUnauthorized,
+			"message": "Email or Password is not match",
+			"data": nil,
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"statusCode": http.StatusOK,
 		"message": "Success",
-		"data": auth,
+		"token": token,
 	})
 }
