@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/romzifg/user_management/models"
+	authmodule "github.com/romzifg/user_management/modules/auth.module"
 	rolemodule "github.com/romzifg/user_management/modules/role.module"
 	usermodule "github.com/romzifg/user_management/modules/user.module"
 )
@@ -24,6 +25,7 @@ func main() {
 	// Route
 	rolemodule.Routes(router)
 	usermodule.Routes(router)
+	authmodule.Routes(router)
 	
 	port := os.Getenv("PORT")
 	router.Run(":" + port)
