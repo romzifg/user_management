@@ -27,19 +27,17 @@ func ShowById(c *gin.Context) {
 	if err := models.DB.First(&user, id).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
-			c.JSON(http.StatusNotFound, gin.H{
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 				"statusCode": http.StatusNotFound,
 				"message": "Not Found",
 				"data": nil,
 			})
-			return
 		default:
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"statusCode": http.StatusBadRequest,
 				"message": "Bad Request",
 				"data": nil,
 			})
-			return
 		}
 	}
 
@@ -55,7 +53,7 @@ func Create(c *gin.Context) {
 
 	err :=  c.ShouldBindJSON(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"statusCode": http.StatusBadRequest,
 			"message": "Bad Request",
 		})

@@ -15,7 +15,7 @@ func Login(c *gin.Context) {
 
 	err :=  c.ShouldBindJSON(&authDto)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"statusCode": http.StatusBadRequest,
 			"message": "Bad Request",
 		})
@@ -25,40 +25,36 @@ func Login(c *gin.Context) {
 	if err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
-			c.JSON(http.StatusNotFound, gin.H{
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 				"statusCode": http.StatusNotFound,
 				"message": "Not Found",
 				"data": nil,
 			})
-			return
 		default:
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"statusCode": http.StatusBadRequest,
 				"message": "Bad Request",
 				"data": nil,
 			})
-			return
 		}
 	}
 
 	_, errCompare := helpers.ComparePassword(auth.Password, authDto.Password)
 	if errCompare != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"statusCode": http.StatusUnauthorized,
 				"message": "Email or Password is not match",
 				"data": nil,
 			})
-			return
 	}
 
 	token, err := helpers.GenerateToken(int(auth.Id))
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 			"statusCode": http.StatusUnauthorized,
 			"message": "Email or Password is not match",
 			"data": nil,
 		})
-		return
 	}
 
 	c.SetSameSite(http.SameSiteLaxMode)

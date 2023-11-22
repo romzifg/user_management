@@ -26,19 +26,17 @@ func ShowById(c *gin.Context) {
 	if err := models.DB.First(&role, id).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
-			c.JSON(http.StatusNotFound, gin.H{
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 				"statusCode": http.StatusNotFound,
 				"message": "Not Found",
 				"data": nil,
 			})
-			return
 		default:
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"statusCode": http.StatusBadRequest,
 				"message": "Bad Request",
 				"data": nil,
 			})
-			return
 		}
 	}
 
@@ -53,12 +51,11 @@ func Create(c *gin.Context) {
 	var role models.Role
 
 	if err := c.ShouldBindJSON(&role); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"statusCode": http.StatusBadRequest,
 			"message": "Bad Request",
 			"data": nil,
 		})
-		return
 	}
 
 	models.DB.Create(&role)
@@ -75,30 +72,27 @@ func Update(c *gin.Context) {
 	id := c.Param("id")
 	
 	if err := c.ShouldBindJSON(&dto); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"statusCode": http.StatusBadRequest,
 			"message": "Bad Request",
 			"data": nil,
 		})
-		return
 	}
 
 	if err := models.DB.First(&role, id).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
-			c.JSON(http.StatusNotFound, gin.H{
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 				"statusCode": http.StatusNotFound,
 				"message": "Not Found",
 				"data": nil,
 			})
-			return
 		default:
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"statusCode": http.StatusBadRequest,
 				"message": "Bad Request",
 				"data": nil,
 			})
-			return
 		}
 	}
 
@@ -117,19 +111,17 @@ func Delete(c *gin.Context) {
 	if err := models.DB.First(&role, id).Error; err != nil {
 		switch err {
 		case gorm.ErrRecordNotFound:
-			c.JSON(http.StatusNotFound, gin.H{
+			c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 				"statusCode": http.StatusNotFound,
 				"message": "Not Found",
 				"data": nil,
 			})
-			return
 		default:
-			c.JSON(http.StatusBadRequest, gin.H{
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 				"statusCode": http.StatusBadRequest,
 				"message": "Bad Request",
 				"data": nil,
 			})
-			return
 		}
 	}
 
