@@ -10,7 +10,7 @@ func Routes(r *gin.Engine) {
 
 	route.GET("/", ShowAll)
 	route.GET("/:id", ShowById)
-	route.POST("/", Create)
-	route.PUT("/:id", Update)
-	route.DELETE("/:id", Delete)
+	route.POST("/",middleware.RequiredAuth ,Create)
+	route.PUT("/:id",middleware.RequiredAuth ,Update)
+	route.DELETE("/:id",middleware.RequiredAuth ,Delete)
 }

@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 
@@ -11,7 +10,6 @@ import (
 func ApiTokenMiddleware(c *gin.Context) {
 	requiredToken := os.Getenv("REQUIRED_TOKEN")
 	token := c.Request.Header.Get("api_token")
-	fmt.Println(token)
 
 	if token == "" || token != requiredToken {
 	c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
