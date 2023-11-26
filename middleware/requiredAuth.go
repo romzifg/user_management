@@ -37,10 +37,10 @@ func RequiredAuth(c *gin.Context) {
 			})	
 		}
 
-		var auth models.Auth
-		models.DB.First(&auth, claims["userId"])
+		var user models.User
+		models.DB.First(&user, "id = ?" ,claims["userId"])
 
-		if auth.Id == 0 {
+		if user.Id == 0 {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"statusCode": http.StatusUnauthorized,
 				"message": "Unauthorized",
@@ -48,7 +48,7 @@ func RequiredAuth(c *gin.Context) {
 			return
 		}
 
-		c.Set("auth", auth)
+		c.Set("user", user)
 		c.Next()
 	} else {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
