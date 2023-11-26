@@ -9,6 +9,8 @@ type Auth struct {
 	Password 	string `gorm:"carchar(30)" json:"password"`
 	RoleId   	int64  `gorm:"int" json:"role_id"`
 	Role 		Role 	`gorm:"foreignKey:RoleId"`
+	UserId		int64 	`gorm:"int" json:"user_id"`	
+	User		User	`gorm:"foreignKey:UserId"`	
 	CreatedAt 	time.Time	`gorm:"timestamp" json:"created_at"`
 	UpdatedAt 	time.Time	`gorm:"timestamp" json:"updated_at"`
 }
